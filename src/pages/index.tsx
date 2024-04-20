@@ -108,7 +108,7 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="min-h-[800px]">
+        <div className="min-h-[700px] flex justify-center items-center">
           {error && <p>Error: {error.message}</p>}
           {data && (
             <LineChart
