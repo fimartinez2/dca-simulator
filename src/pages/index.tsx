@@ -1,10 +1,11 @@
-import { getAllTrades } from "@/service/markets";
+import { getAllTrades, getMarkets } from "@/service/markets";
 import { Inter } from "next/font/google";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useGraphConfig } from "@/store/graphConfigStore";
 import LineChart from "@/components/LineChart";
 import { createWalletDCA } from "@/helpers/functions/createWallet";
+import SelectBox from "@/components/SelectBox";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,6 +14,11 @@ export default function Home() {
   const { data } = useQuery({
     queryFn: getAllTrades,
     queryKey: ["marketQuery", market, interval, startDate, endDate],
+  });
+
+  const { data: markets } = useQuery({
+    queryFn: getMarkets,
+    queryKey: ["markets"],
   });
 
   useEffect(() => {
@@ -27,7 +33,20 @@ export default function Home() {
     >
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm flex flex-col">
         <div className="flex gap-2">
-          <button onClick={() => setMarket("BTC-COP")}>BTC-COP</button>
+          <div>
+            <SelectBox
+              name="market"
+              label="Market"
+              options={
+                markets?.markets.map((market) => ({
+                  id: market.id,
+                  label: market.name,
+                })) ?? []
+              }
+              setExternalValue={setMarket}
+              placeholder="Select Market"
+            />
+          </div>
         </div>
         {data && (
           <LineChart

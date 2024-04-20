@@ -1,10 +1,14 @@
-import { GetAllMarketsResponse, TradesResponse } from "@/interface/market";
+import {
+  GetAllMarketsResponse,
+  MarketList,
+  TradesResponse,
+} from "@/interface/market";
 import api from "./api";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import { getTimestampsByInterval } from "@/helpers/functions/timestampGetters";
 import { getAverageTradePrice } from "@/helpers/functions/getAvgPrice";
 
-export const getMarketTrade = async (
+const getMarketTrade = async (
   market: string,
   timestamp: number,
   limit: number
@@ -38,4 +42,9 @@ export const getAllTrades = async (
       avgPrice: avgPrice,
     };
   });
+};
+
+export const getMarkets = async () => {
+  const response = await api.get<MarketList>("/markets");
+  return response.data;
 };
