@@ -3,6 +3,7 @@ interface TradeEntry {
 }
 
 interface TradesData {
+  id: number;
   market_id: string;
   timestamp: null | string;
   last_timestamp: string;
@@ -14,6 +15,6 @@ export interface TradesResponse {
 }
 
 export interface GetAllMarketsResponse {
-  date: string;
+  date: Date;
   avgPrice: number;
 }

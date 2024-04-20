@@ -1,3 +1,5 @@
-const getAvgPrice = (prices: number[]): number => {
-  return prices.reduce((acc, price) => acc + price, 0) / prices.length;
+import { TradesResponse } from "@/interface/market";
+
+export const getAverageTradePrice = (prices: number[]) => {
+  return prices.reduce((acc, cur) => acc + cur, 0) / prices.length;
 };

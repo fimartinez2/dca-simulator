@@ -1,5 +1,4 @@
 import * as d3 from "d3"; // we will need d3.js
-import { useEffect } from "react";
 
 type LineChartProps = {
   width: number;
@@ -7,10 +6,11 @@ type LineChartProps = {
   startDate: Date;
   endDate: Date;
   data: { x: number; y: number }[];
+  investment: { x: number; y: number }[];
 };
 
 const LineChart = (props: LineChartProps) => {
-  const { width, height, startDate, endDate, data } = props;
+  const { width, height, startDate, endDate, data, investment } = props;
   // const xScale = d3.scaleTime().domain([startDate, endDate]).range([0, width]);
   // get max x and y values
   const maxX = d3.max(data, (d) => d.x);
@@ -23,17 +23,22 @@ const LineChart = (props: LineChartProps) => {
     .y((d) => yScale(d.y));
 
   const linePath = lineBuilder(data);
+  const investmentLinePath = lineBuilder(investment);
   return (
     <div>
       <svg width={width} height={height}>
-        <g>
-          <path
-            d={linePath ?? undefined}
-            stroke="white"
-            fill="none"
-            strokeWidth={2}
-          />
-        </g>
+        <path
+          d={linePath ?? undefined}
+          stroke="white"
+          fill="none"
+          strokeWidth={2}
+        />
+        <path
+          d={investmentLinePath ?? undefined}
+          stroke="red"
+          fill="none"
+          strokeWidth={2}
+        />
       </svg>
     </div>
   );

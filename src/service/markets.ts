@@ -2,6 +2,7 @@ import { GetAllMarketsResponse, TradesResponse } from "@/interface/market";
 import api from "./api";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import { getTimestampsByInterval } from "@/helpers/functions/timestampGetters";
+import { getAverageTradePrice } from "@/helpers/functions/getAvgPrice";
 
 export const getMarketTrade = async (
   market: string,
@@ -27,11 +28,14 @@ export const getAllTrades = async (
   const responses = await Promise.all(
     timestamps.map((timestamp) => getMarketTrade(market, timestamp, 10))
   );
-  return responses.map((response, index) => ({
-    date: new Date(timestamps[index]).toISOString(),
-    avgPrice: response.trades.entries.reduce(
-      (acc, entry) => acc + parseFloat(entry[2]),
-      0
-    ),
-  }));
+
+  return responses.map((response, index) => {
+    const avgPrice = getAverageTradePrice(
+      response.trades.entries.map((entry) => parseFloat(entry[2]))
+    );
+    return {
+      date: new Date(timestamps[index]),
+      avgPrice: avgPrice,
+    };
+  });
 };

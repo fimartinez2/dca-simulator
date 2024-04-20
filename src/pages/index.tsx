@@ -4,11 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useGraphConfig } from "@/store/graphConfigStore";
 import LineChart from "@/components/LineChart";
+import { createWalletDCA } from "@/helpers/functions/createWallet";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { market, interval, startDate, endDate } = useGraphConfig();
+  const { market, interval, startDate, endDate, setMarket } = useGraphConfig();
   const { data } = useQuery({
     queryFn: getAllTrades,
     queryKey: ["marketQuery", market, interval, startDate, endDate],
@@ -16,7 +17,8 @@ export default function Home() {
 
   useEffect(() => {
     if (!data) return;
-    console.log(data);
+    const wallet = createWalletDCA(data, 1000000);
+    console.log(wallet);
   }, [data]);
 
   return (
@@ -24,16 +26,25 @@ export default function Home() {
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
     >
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm flex flex-col">
+        <div className="flex gap-2">
+          <button onClick={() => setMarket("BTC-COP")}>BTC-COP</button>
+        </div>
         {data && (
           <LineChart
             width={800}
             height={400}
             startDate={startDate}
             endDate={endDate}
-            data={data?.map((dot, index) => {
+            data={createWalletDCA(data, 1000000).map((dot, index) => {
               return {
                 x: index,
-                y: dot.avgPrice,
+                y: dot.totalValue,
+              };
+            })}
+            investment={createWalletDCA(data, 1000000).map((dot, index) => {
+              return {
+                x: index,
+                y: dot.totalInvestment,
               };
             })}
           />
