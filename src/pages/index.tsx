@@ -2,19 +2,15 @@ import { getAllTrades, getMarketTrade } from "@/service/markets";
 import { Inter } from "next/font/google";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { useGraphConfig } from "@/store/graphConfigStore";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const { market, interval, startDate, endDate } = useGraphConfig();
   const { data, isLoading } = useQuery({
     queryFn: getAllTrades,
-    queryKey: [
-      "marketQuery",
-      "BTC-CLP",
-      "monthly",
-      new Date(2021, 0, 1),
-      new Date(2021, 11, 31),
-    ],
+    queryKey: ["marketQuery", market, interval, startDate, endDate],
   });
 
   useEffect(() => {
