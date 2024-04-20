@@ -62,6 +62,7 @@ export default function Home() {
         <div>
           <NumberInput
             label="Investment Amount"
+            prefix={market.split("-")[1]}
             value={investmentAmount}
             onChange={(e) => setInvestmentAmount(Number(e.target.value))}
           />

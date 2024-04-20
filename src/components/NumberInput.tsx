@@ -23,7 +23,7 @@ export const NumberInput: FC<InputProps> = forwardRef<
       )}
       {prefix ? (
         <span
-          className={` flex disabled:cursor-not-allowed placeholder:text-zinc-400 disabled:bg-gray-100 text-gray-700 text-sm border shadow disabled:shadow-none rounded-md p-2.5 w-full mt-3 mb-3 ${className}`}
+          className={` flex disabled:cursor-not-allowed placeholder:text-zinc-400 bg-white disabled:bg-gray-100 text-gray-700 text-sm border shadow disabled:shadow-none rounded-md p-2.5 w-full mt-3 mb-3 ${className}`}
         >
           {prefix}
           <input ref={ref} className="focus:outline-none ml-2" {...props} />
