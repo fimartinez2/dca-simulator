@@ -1,12 +1,12 @@
 import { WalletItem } from "@/interface/wallet";
 import { create } from "zustand";
 
-interface GraphConfigStore {
+interface WalletStore {
   wallet: WalletItem[];
   setWallet: (wallet: WalletItem[]) => void;
 }
 
-export const useGraphConfig = create<GraphConfigStore>()((set) => ({
+export const useWalletStore = create<WalletStore>()((set) => ({
   wallet: [],
   setWallet: (wallet) => set({ wallet }),
 }));

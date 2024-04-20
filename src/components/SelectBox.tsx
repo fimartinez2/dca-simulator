@@ -14,8 +14,9 @@ interface Props {
   labelClassName?: string;
   disabled?: boolean;
   className?: string;
-  defaultValue?: string;
+  defaultValue?: Option;
   setExternalValue?: (value: string) => void;
+  optionsClassName?: string;
 }
 
 const SelectBox = (props: Props) => {
@@ -28,9 +29,10 @@ const SelectBox = (props: Props) => {
     defaultValue,
     className,
     setExternalValue,
+    optionsClassName,
   } = props;
 
-  const [value, setValue] = useState<Option>();
+  const [value, setValue] = useState<Option | undefined>(defaultValue);
 
   const onChange = (value: Option) => {
     if (!value.label) return;
@@ -38,19 +40,13 @@ const SelectBox = (props: Props) => {
     setExternalValue?.(value.label);
   };
 
-  useEffect(() => {
-    if (defaultValue) {
-      setExternalValue?.(defaultValue);
-    }
-  }, []);
-
   return (
-    <Listbox onChange={onChange} disabled={disabled} value={options[0]}>
+    <Listbox onChange={onChange} disabled={disabled} value={value}>
       <label className={`text-sm text-gray-500  ${labelClassName}`}>
         {label}
       </label>
       <div
-        className={` text-gray-700 bg-white  flex text-sm  border focus:outline-none rounded-md p-2.5 w-full truncate ${
+        className={` text-gray-700 bg-white min-w-52 flex text-sm  border focus:outline-none rounded-md p-2.5 w-full truncate ${
           disabled ? "bg-gray-100 cursor-not-allowed" : "shadow"
         }`}
       >
@@ -81,7 +77,7 @@ const SelectBox = (props: Props) => {
         </div>
       </div>
       <div className="relative">
-        <Listbox.Options className="rounded border shadow-lg w-full top-1 absolute p-2 bg-white text-xs">
+        <Listbox.Options className="rounded border shadow-lg w-full top-1 absolute p-2 bg-white text-xs max-h-44 overflow-auto">
           {options.map((option) => (
             <Listbox.Option
               key={option.id}
@@ -89,7 +85,7 @@ const SelectBox = (props: Props) => {
               as={Fragment}
               disabled={value?.label === option.label}
             >
-              {({ active, disabled }) => (
+              {({ active, disabled, selected }) => (
                 <li
                   className={`p-2  rounded truncate capitalize ${
                     active
@@ -99,7 +95,11 @@ const SelectBox = (props: Props) => {
                     disabled
                       ? "!bg-primary-light !bg-opacity-10"
                       : "cursor-pointer"
-                  }`}
+                  } ${
+                    value?.label === option.label
+                      ? "font-semibold bg-purple-400"
+                      : ""
+                  } ${optionsClassName}`}
                 >
                   {option.label}
                 </li>
