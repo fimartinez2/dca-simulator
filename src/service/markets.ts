@@ -25,7 +25,7 @@ export const getAllTrades = async (
   const [_, market, interval, startDate, endDate] = ctx.queryKey;
   const timestamps = getTimestampsByInterval(startDate, endDate, interval);
   const responses = await Promise.all(
-    timestamps.map((timestamp) => getMarketTrade(market, timestamp, 50))
+    timestamps.map((timestamp) => getMarketTrade(market, timestamp, 10))
   );
   return responses.map((response, index) => ({
     date: new Date(timestamps[index]).toISOString(),
