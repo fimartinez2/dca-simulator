@@ -109,28 +109,27 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="min-h-[700px] flex justify-center items-center">
+        <div className="min-h-[700px] flex flex-col justify-center items-center">
           {error && <p>Error: {error.message}</p>}
-          {data && (
-            <LineChart
-              width={900}
-              height={600}
-              startDate={startDate}
-              endDate={endDate}
-              data={wallet.map((dot, index) => {
-                return {
-                  x: dot.date,
-                  y: dot.totalValue,
-                };
-              })}
-              investment={wallet.map((dot, index) => {
-                return {
-                  x: dot.date,
-                  y: dot.totalInvestment,
-                };
-              })}
-            />
-          )}
+
+          <LineChart
+            width={900}
+            height={600}
+            startDate={startDate}
+            endDate={endDate}
+            data={wallet.map((dot, index) => {
+              return {
+                x: dot.date,
+                y: dot.totalValue,
+              };
+            })}
+            investment={wallet.map((dot, index) => {
+              return {
+                x: dot.date,
+                y: dot.totalInvestment,
+              };
+            })}
+          />
         </div>
       </div>
       <WalletTable wallet={wallet} />

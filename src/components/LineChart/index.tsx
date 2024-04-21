@@ -1,5 +1,6 @@
 import getFirstDayOfMonth from "@/helpers/functions/getFirstDayOfMonth";
 import * as d3 from "d3";
+import ChartAxes from "./Axes";
 import { useEffect, useRef } from "react";
 
 type LineChartProps = {
@@ -14,11 +15,12 @@ const MARGIN = { top: 60, right: 30, bottom: 50, left: 60 };
 
 const LineChart = (props: LineChartProps) => {
   const { width, height, startDate, endDate, data, investment } = props;
-  const axesRef = useRef(null);
+
   const boundsWidth = width - MARGIN.right - MARGIN.left;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;
   const maxY = d3.max(data, (d) => d.y);
-  //get start an ande dates on the pegining of the month
+
+  const svgRef = useRef(null);
 
   const xScale = d3
     .scaleTime()
@@ -33,22 +35,10 @@ const LineChart = (props: LineChartProps) => {
   const linePath = lineBuilder(data);
   const investmentLinePath = lineBuilder(investment);
 
-  useEffect(() => {
-    const svgElement = d3.select(axesRef.current);
-    svgElement.selectAll("*").remove();
-    const xAxisGenerator = d3.axisBottom(xScale);
-    svgElement
-      .append("g")
-      .attr("transform", "translate(0," + boundsHeight + ")")
-      .call(xAxisGenerator);
-
-    const yAxisGenerator = d3.axisLeft(yScale);
-    svgElement.append("g").call(yAxisGenerator);
-  }, [xScale, yScale, boundsHeight]);
-
+  useEffect(() => {}, [startDate, endDate, data, investment]);
   return (
     <div>
-      <svg width={width} height={height}>
+      <svg width={width} height={height} ref={svgRef}>
         <g
           width={boundsWidth}
           height={boundsHeight}
@@ -62,17 +52,36 @@ const LineChart = (props: LineChartProps) => {
           />
           <path
             d={linePath ?? undefined}
-            stroke="red"
+            stroke="#6366f1"
             fill="none"
             strokeWidth={2}
           />
+          <path
+            d={`${
+              linePath ?? ""
+            } L ${boundsWidth} ${boundsHeight} L 0 ${boundsHeight}`}
+            fill="#6366f1"
+            opacity={0.3}
+          />
         </g>
-        <g
-          width={boundsWidth}
-          height={boundsHeight}
-          ref={axesRef}
-          transform={`translate(${[MARGIN.left, MARGIN.top].join(",")})`}
+        <ChartAxes
+          xScale={xScale}
+          yScale={yScale}
+          boundsHeight={boundsHeight}
+          boundsWidth={boundsWidth}
+          MARGIN={MARGIN}
         />
+        {data.map((dot, index) => {
+          return (
+            <circle
+              key={index}
+              cx={xScale(dot.x) + MARGIN.left}
+              cy={yScale(dot.y) + MARGIN.top}
+              r={3}
+              fill="#6366f1"
+            />
+          );
+        })}
       </svg>
     </div>
   );

@@ -18,7 +18,7 @@ const WalletTableRow = (props: WalletItem) => {
   const { market } = useGraphConfig();
 
   return (
-    <tr className="h-14 px-2 border-b odd:bg-slate-600 text-center">
+    <tr className="h-14 px-2 border-t odd:bg-slate-600 text-center">
       <td className="px-3">{dateFormat(date)}</td>
       <td className="px-3">
         {formatMoney(Math.round(priceToDate * 100) / 100, market.split("-")[1])}
