@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import { useEffect, useRef } from "react";
-
+import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"] });
 interface Props {
   xScale: d3.ScaleTime<number, number>;
   yScale: d3.ScaleLinear<number, number>;
@@ -20,10 +21,24 @@ const ChartAxes = (props: Props) => {
       .append("g")
       .attr("transform", "translate(0," + boundsHeight + ")")
       .call(xAxisGenerator)
-      .style("font-weight", "bold");
+      .style("font-weight", "bold")
+      .attr("class", inter.className)
+      .selectAll("text")
+      .attr("class", "x-axis");
 
     const yAxisGenerator = d3.axisLeft(yScale);
-    svgElement.append("g").call(yAxisGenerator).style("font-weight", "bold");
+    svgElement
+      .append("g")
+      .call(yAxisGenerator)
+      .style("font-weight", "bold")
+      .style("font-size", "8px")
+      .attr("class", inter.className);
+
+    svgElement
+      .selectAll(".x-axis")
+      .style("text-anchor", "end")
+      .attr("transform", "rotate(-65) translate(-10, -5)");
+    // .attr("transform", "translate(0, 3)");
   }, [xScale, yScale, boundsHeight]);
   return (
     <g

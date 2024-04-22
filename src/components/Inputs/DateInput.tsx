@@ -9,11 +9,11 @@ const DateInput = (props: Props) => {
   const { label, disabled, setExternalValue, value } = props;
 
   return (
-    <div>
+    <div className="w-full">
       <p className="text-gray-500">{label ?? "Fecha"}</p>
       <input
         disabled={disabled}
-        className="w-52 h-10 text-gray-700 bg-white flex text-sm  border focus:outline-none rounded-md p-2.5 truncate "
+        className="w-full h-10 text-gray-700 bg-white flex text-sm  border focus:outline-none rounded-md p-2.5 truncate "
         type="date"
         placeholder="Fecha"
         value={value?.toISOString().split("T")[0]}

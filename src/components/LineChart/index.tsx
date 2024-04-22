@@ -11,7 +11,7 @@ type LineChartProps = {
   data: { x: Date; y: number }[];
   investment: { x: Date; y: number }[];
 };
-const MARGIN = { top: 60, right: 30, bottom: 50, left: 60 };
+const MARGIN = { top: 60, right: 30, bottom: 70, left: 60 };
 
 const LineChart = (props: LineChartProps) => {
   const { width, height, startDate, endDate, data, investment } = props;
