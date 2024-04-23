@@ -7,6 +7,12 @@ El simulador se puede encontrar desplegado en [este enlace](https://dca-simulato
 
 ## Despliegue Local :computer:
 
+Para ambos modos de despliegue se debe crear un archivo `.env` en el directorio raíz del proyecto con la siguiente variable:
+```env
+NEXT_PUBLIC_API_URL=https://www.buda.com/api/v2
+```
+
+
 ### Docker :whale:
 
 - En el directorio raíz del proyecto ejecutar: `docker build -t dca-simulator`
@@ -57,3 +63,5 @@ La tabla muestra el estado del portafolio y otros datos al momento de invertir
 - El diseño es responsivo y se ve bien para **cualquier** ancho de pantalla, incluído mobile
 - El código es ordenado y se hace uso de diversos componentes para hacerlo mas legible
 - No hay testing
+
+
