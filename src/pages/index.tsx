@@ -11,8 +11,6 @@ import Inputs from "@/components/Inputs";
 import NumberInput from "@/components/Inputs/NumberInput";
 import { Inter } from "next/font/google";
 import useWindowDimensions from "@/hooks/useWindowDimesions";
-import formatMoney from "@/helpers/functions/formatMoney";
-import DetailCard from "@/components/DetailCard";
 import DetailCardContainer from "@/components/DetailCard/DetailCardContainer";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,10 +42,14 @@ export default function Home() {
 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between py-10 px-2 sm:px-10 lg:px-24  ${inter.className}`}
+      className={`flex min-h-screen flex-col items-center justify-between py-14 px-2 sm:px-10 lg:px-24  ${inter.className}`}
     >
-      <div className="z-10 w-full gap-5 items-center justify-between font-mono text-sm flex flex-col xl:flex-row">
-        <div>
+      <div className="z-10 w-full gap-5 items-center justify-between font-mono text-sm flex flex-col xl:flex-row h-fit">
+        <div className="flex flex-col items-start justify-between h-full relative">
+          <div className="flex-grow xl:absolute xl:-top-40 flex items-center xl:mb-0 mb-5  gap-2 xl:block">
+            <p className="text-6xl">DCA</p>
+            <p className="text-2xl">Simulator</p>
+          </div>
           <NumberInput
             label="Investment Amount"
             prefix={market.split("-")[1]}

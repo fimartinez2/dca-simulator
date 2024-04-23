@@ -9,7 +9,7 @@ const WalletTable = (props: Props) => {
   const { wallet } = props;
   const { market } = useGraphConfig();
   return (
-    <div className="overflow-x-auto w-full flex">
+    <div className="overflow-x-auto w-full flex mt-5">
       <table className="w-full px-2 min-w-1000">
         <thead className="">
           <tr className="h-14 bg-indigo-500">
