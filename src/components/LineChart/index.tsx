@@ -2,6 +2,7 @@ import getFirstDayOfMonth from "@/helpers/functions/getFirstDayOfMonth";
 import * as d3 from "d3";
 import ChartAxes from "./Axes";
 import { useEffect, useRef } from "react";
+import ChartLegend from "./Legend";
 
 type LineChartProps = {
   width: number;
@@ -44,6 +45,7 @@ const LineChart = (props: LineChartProps) => {
           height={boundsHeight}
           transform={`translate(${[MARGIN.left, MARGIN.top].join(",")})`}
         >
+          <ChartLegend />
           <path
             d={investmentLinePath ?? undefined}
             stroke="white"
