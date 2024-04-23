@@ -1,7 +1,5 @@
 # DCA Simulator :chart_with_upwards_trend:
 
-[toc]
-
 El simulador se puede encontrar desplegado en [este enlace](https://dca-simulator.vercel.app/) :link:
 
 > :warning: <span style="color:red">Importante</span>
