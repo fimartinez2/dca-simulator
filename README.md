@@ -1,40 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DCA Simulator :chart_with_upwards_trend:
 
-## Getting Started
+[toc]
 
-First, run the development server:
+El simulador se puede encontrar desplegado en [este enlace](https://dca-simulator.vercel.app/) :link:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+> :warning: <span style="color:red">Importante</span>
+> El simulador no funcionará sin un Proxy, extensión de navegador o similar que permita evitar el bloqueo de llamadas por CORS
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Despliegue Local :computer:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Docker :whale:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- En el directorio raíz del proyecto ejecutar: `docker build -t dca-simulator`
+- Luego del _build_ ejecutar: `docker run -p 3000:3000 dca-simulator`
+- La aplicación debiese estar corriendo en [localhost:3000](http://localhost:3000)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Usando NPM :package:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- En el directorio raíz del proyecto ejecutar: `npm install`
+- Una vez instalados los paquetes ejecutar: `npm run build`
+- La aplicación debiese estar corriendo en [localhost:3000](http://localhost:3000)
 
-## Learn More
+## Sobre el simulador
 
-To learn more about Next.js, take a look at the following resources:
+### Gráfico
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Se hace uso de D3 para graficar:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- El valor del portafolio a través del tiempo
+- La inversión total a través del tiempo
 
-## Deploy on Vercel
+### Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Las variables con las que se puede interactuar son las siguientes:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Monto inicial de inversión
+- Mercado (todos los disponibles en la API de buda.com)
+- Intervalo de inversión (Anual, Mensual, Semanal, Diario)
+- Fecha de inicio de simulación
+- Fecha de término de simulación
+
+Al cambiar una de las variables el gráfico se actualizará automáticamente.
+
+> :warning: <span style="color:red">Importante</span>
+> La simulación se cae cuando el tiempo de la simulación es grande y los intervalos de inversión pequeños debido al límite de llamadas consecutivas de la API de buda.com
+> Aparecerá el mensaje de error `429 Too many requests`
+
+### Tabla
+
+La tabla muestra el estado del portafolio y otros datos al momento de invertir
+
+## Sobre el desafío
+
+- Se logra el desafío base (12 meses invirtiendo una vez al mes BTC-CLP)
+- Se agregan variables para interactuar con la simulación
+- Se despliega en un contenedor de Docker
+- Se puede ver la app funcionando [aquí](https://dca-simulator.vercel.app/)
+- El diseño es responsivo y se ve bien para **cualquier** ancho de pantalla, incluído mobile
+- El código es ordenado y se hace uso de diversos componentes para hacerlo mas legible
+- No hay testing
