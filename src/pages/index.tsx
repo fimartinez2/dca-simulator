@@ -61,11 +61,11 @@ export default function Home() {
           <Inputs />
         </div>
         <div className="min-h-[700px] flex flex-col-reverse justify-center items-center sm:flex-col">
-          {error && <p>Error: {error.message}</p>}
           <DetailCardContainer
             wallet={wallet[wallet.length - 1]}
             currency={market.split("-")[1]}
           />
+          {error && <p className="text-red-500 my-5">Error: {error.message}</p>}
           {width && (
             <LineChart
               width={
